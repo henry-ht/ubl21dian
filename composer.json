@@ -1,0 +1,51 @@
+{
+    "name": "henry-ht/ubl21dian",
+    "type": "library",
+    "description": "Core for electronic invoicing pre-validation - DIAN UBL 2.1",
+    "homepage": "https://thecreativehenry.app",
+    "keywords": [
+        "soap dian",
+        "web service",
+        "dian",
+        "xml",
+        "ubl",
+        "core"
+    ],
+    "support": {
+        "issues": "https://github.com/henry-ht/ubl21dian/issues",
+        "source": "https://github.com/henry-ht/ubl21dian"
+    },
+    "license": "LGPL-3.0",
+    "authors": [
+        {
+            "name": "THE CREATIVE HENRY S.A.S.",
+            "email": "soporte@thecreativehenry.app",
+            "homepage": "https://thecreativehenry.app"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": ">= 5.4",
+        "ext-dom": "*",
+        "ext-xml": "*",
+        "ext-curl": "*",
+        "ext-libxml": "*",
+        "ext-openssl": "*",
+        "ext-xmlwriter": "*",
+        "nesbot/carbon": ">=2.19"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ubl21dian\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ubl21dian\\test\\": "tests/"
+        }
+    }
+}
