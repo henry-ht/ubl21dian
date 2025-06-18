@@ -23,3 +23,54 @@ Package for electronic invoicing in Colombia
 * Status query by CUFE  
 * Numbering range query  
 * Asynchronous test set sending  
+
+### Example of electronic invoice signing and validation using UBL 2.1 (Laravel)
+
+This snippet demonstrates how to generate the XML of an invoice, digitally sign it, and validate it against the XSD schema using the `SignInvoice` package.
+
+<!-- ...existing code... -->
+
+```php
+use ubl21dian\XAdES\SignInvoice;
+
+$view = view('dian-xml.Invoice')->with([
+    'sale'      => $this->sale
+]);
+
+$xml = $view->render();
+
+$sign = new SignInvoice(storage_path(env('DIAN_PFXPATH')), env('DIAN_PFXPASSWORD'));
+
+$sign->softwareID = $this->sale->dian_resolution->software_id;
+$sign->pin = env('DIAN_PIN');
+$sign->technicalKey = env('DIAN_TECHNICAL_KEY');
+$sign->sign($xml);
+
+$xmlSign = $sign->getDocument()->saveXML();
+
+$validate = $this->validateXmlWithXsd($xmlSign, storage_path('XSD/maindoc/UBL-Invoice-2.1.xsd'));
+```
+
+```php
+/**
+     * Validates an XML file against one or multiple XSD schemas.
+     *
+     * @param string $xmlContent Content of the XML to be validated.
+     * @param string|array $xsdPaths Path(s) to the XSD file or XSD files.
+     * @return bool Validation result.
+     */
+    public function validateXmlWithXsd(string $xmlContent, $xsdPath): bool
+    {
+        $dom = new \DOMDocument();
+        $dom->preserveWhiteSpace = false;
+        $dom->formatOutput = false;
+        $dom->loadXML($xmlContent);
+
+        $valid = false;
+
+        $valid = $dom->schemaValidate($xsdPath);
+
+        return $valid;
+    }
+```
+<!-- ...existing code... -->
