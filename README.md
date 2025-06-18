@@ -31,28 +31,28 @@ This snippet demonstrates how to generate the XML of an invoice, digitally sign 
 <!-- ...existing code... -->
 
 ```php
-use ubl21dian\XAdES\SignInvoice;
+    use ubl21dian\XAdES\SignInvoice;
 
-$view = view('dian-xml.Invoice')->with([
-    'sale'      => $this->sale
-]);
+    $view = view('dian-xml.Invoice')->with([
+        'sale'      => $this->sale
+    ]);
 
-$xml = $view->render();
+    $xml = $view->render();
 
-$sign = new SignInvoice(storage_path(env('DIAN_PFXPATH')), env('DIAN_PFXPASSWORD'));
+    $sign = new SignInvoice(storage_path(env('DIAN_PFXPATH')), env('DIAN_PFXPASSWORD'));
 
-$sign->softwareID = $this->sale->dian_resolution->software_id;
-$sign->pin = env('DIAN_PIN');
-$sign->technicalKey = env('DIAN_TECHNICAL_KEY');
-$sign->sign($xml);
+    $sign->softwareID = $this->sale->dian_resolution->software_id;
+    $sign->pin = env('DIAN_PIN');
+    $sign->technicalKey = env('DIAN_TECHNICAL_KEY');
+    $sign->sign($xml);
 
-$xmlSign = $sign->getDocument()->saveXML();
+    $xmlSign = $sign->getDocument()->saveXML();
 
-$validate = $this->validateXmlWithXsd($xmlSign, storage_path('XSD/maindoc/UBL-Invoice-2.1.xsd'));
+    $validate = $this->validateXmlWithXsd($xmlSign, storage_path('XSD/maindoc/UBL-Invoice-2.1.xsd'));
 ```
 
 ```php
-/**
+    /**
      * Validates an XML file against one or multiple XSD schemas.
      *
      * @param string $xmlContent Content of the XML to be validated.
