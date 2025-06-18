@@ -98,7 +98,7 @@ class SignInvoice extends Sign
     protected $ids = [
         'SignedPropertiesID' => 'SIGNED-PROPS',
         'SignatureValueID' => 'SIG-VALUE',
-        'SignatureID' => 'THECREATIVEHENRY',
+        'SignatureID' => 'TORRESOFTWARE',
         'KeyInfoID' => 'KEY-INFO',
         'ReferenceID' => 'REF',
     ];
@@ -254,7 +254,7 @@ class SignInvoice extends Sign
         $this->signedSignatureProperties = $this->domDocument->createElement('xades:SignedSignatureProperties');
         $this->signedProperties->appendChild($this->signedSignatureProperties);
 
-        $this->signingTime = $this->domDocument->createElement('xades:SigningTime', Carbon::now()->format('Y-m-d\TH:i:s.vT:00'));
+        $this->signingTime = $this->domDocument->createElement('xades:SigningTime', Carbon::now()->format('Y-m-d\TH:i:s.vP'));
         $this->signedSignatureProperties->appendChild($this->signingTime);
 
         $this->signingCertificate = $this->domDocument->createElement('xades:SigningCertificate');
